@@ -61,6 +61,7 @@ model Contact {
   createdAt DateTime @default(now())
 }
 
+// Ad model for advertisement management
 model Ad {
   id        String   @id @default(cuid())
   title     String

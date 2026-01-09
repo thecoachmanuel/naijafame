@@ -1,0 +1,13 @@
+warning: in the working copy of 'prisma/schema.prisma', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/prisma/schema.prisma b/prisma/schema.prisma[m
+[1mindex 770cab9..1d89bc7 100644[m
+[1m--- a/prisma/schema.prisma[m
+[1m+++ b/prisma/schema.prisma[m
+[36m@@ -61,6 +61,7 @@[m [mmodel Contact {[m
+   createdAt DateTime @default(now())[m
+ }[m
+ [m
+[32m+[m[32m// Ad model for advertisement management[m
+ model Ad {[m
+   id        String   @id @default(cuid())[m
+   title     String[m
