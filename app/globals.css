@@ -1,8 +1,13 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bn-red: #D32F2F; /* BellaNaija Red approx */
+  --bn-black: #111111;
+  --bn-gold: #C5A059; /* For accents */
 }
 
 @theme inline {
@@ -10,6 +15,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-bn-red: var(--bn-red);
+  --color-bn-black: var(--bn-black);
+  --color-bn-gold: var(--bn-gold);
 }
 
 @media (prefers-color-scheme: dark) {
