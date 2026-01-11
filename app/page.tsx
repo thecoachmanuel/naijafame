@@ -37,13 +37,19 @@ export default async function Home() {
 
   // 2. Get DB Posts
   let dbPostsRaw: any[] = [];
-  try {
-    dbPostsRaw = await prisma.post.findMany({
-      where: { published: true },
-      orderBy: { createdAt: 'desc' }
-    });
-  } catch (error) {
-    console.error("Failed to fetch posts from DB (fallback to FS only):", error);
+  
+  // Skip DB if using placeholder connection string
+  const isPlaceholderDb = process.env.DATABASE_URL?.includes('johndoe') || false;
+
+  if (!isPlaceholderDb) {
+    try {
+      dbPostsRaw = await prisma.post.findMany({
+        where: { published: true },
+        orderBy: { createdAt: 'desc' }
+      });
+    } catch (error) {
+      console.error("Failed to fetch posts from DB (fallback to FS only):", error);
+    }
   }
   
   const dbPosts: Post[] = dbPostsRaw.map(p => ({
