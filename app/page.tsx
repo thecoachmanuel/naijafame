@@ -36,10 +36,15 @@ export default async function Home() {
   });
 
   // 2. Get DB Posts
-  const dbPostsRaw = await prisma.post.findMany({
-    where: { published: true },
-    orderBy: { createdAt: 'desc' }
-  });
+  let dbPostsRaw: any[] = [];
+  try {
+    dbPostsRaw = await prisma.post.findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (error) {
+    console.error("Failed to fetch posts from DB (fallback to FS only):", error);
+  }
   
   const dbPosts: Post[] = dbPostsRaw.map(p => ({
     title: p.title,

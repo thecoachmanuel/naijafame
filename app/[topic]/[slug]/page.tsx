@@ -34,9 +34,15 @@ export default async function PostPage({ params }: { params: Promise<{ topic: st
   
   // Try DB first
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let post: any = await prisma.post.findUnique({
-    where: { slug },
-  });
+  let post: any = null;
+  
+  try {
+    post = await prisma.post.findUnique({
+      where: { slug },
+    });
+  } catch (error) {
+    console.warn(`DB fetch failed for slug ${slug}, falling back to FS.`);
+  }
 
   if (!post) {
     // Fallback to FS
