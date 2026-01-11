@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPostsByTopic, getAllTopics, getPostPreview } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
@@ -45,11 +46,12 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => (
               <div key={post.slug} className="group flex flex-col">
-                 <Link href={`/${topic}/${post.slug}`} className="block overflow-hidden mb-4 rounded-sm bg-gray-200 aspect-[4/3]">
-                    <img 
+                 <Link href={`/${topic}/${post.slug}`} className="block overflow-hidden mb-4 rounded-sm bg-gray-200 aspect-[4/3] relative">
+                    <Image 
                         src={getImage(post.slug)} 
                         alt={post.title} 
-                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                  </Link>
                  <div className="flex flex-col flex-grow">

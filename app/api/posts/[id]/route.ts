@@ -15,7 +15,7 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
     }
 
     return NextResponse.json(post);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

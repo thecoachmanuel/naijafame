@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllPosts, getPostPreview } from '@/lib/posts';
 
 interface SearchPageProps {
@@ -22,7 +23,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <div className="font-sans">
       <h1 className="text-3xl font-black uppercase text-bn-black mb-8 border-b-2 border-bn-red pb-2">
-        Search Results for "{q}"
+        Search Results for &quot;{q}&quot;
       </h1>
 
       {results.length === 0 ? (
@@ -31,8 +32,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results.map(post => (
             <Link key={post.slug} href={`/${post.topic}/${post.slug}`} className="group block h-full flex flex-col">
-               <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200">
-                 <img src={getImage(post.slug)} alt={post.title} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+               <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200 relative">
+                 <Image src={getImage(post.slug)} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                </div>
                <span className="text-bn-red text-[10px] font-bold uppercase tracking-wide mb-1">{post.topic}</span>
                <h3 className="font-bold text-base leading-snug group-hover:text-bn-red transition-colors text-bn-black">{post.title}</h3>

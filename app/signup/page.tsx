@@ -26,7 +26,7 @@ export default function SignupPage() {
         const data = await res.json();
         setError(data.message || 'Something went wrong');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to sign up');
     }
   };

@@ -12,7 +12,6 @@ export default function AuthStatus() {
     return (
       <div className="flex items-center space-x-4">
         <span className="text-xs text-white">Welcome, {session.user?.email}</span>
-        {/* @ts-ignore */}
         {session.user?.role === 'ADMIN' && (
            <Link href="/admin" className="text-xs text-white hover:text-gray-300 font-bold">Admin</Link>
         )}

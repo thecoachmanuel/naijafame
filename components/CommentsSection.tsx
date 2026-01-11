@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -27,23 +27,23 @@ export default function CommentsSection({ slug, postTitle, postTopic }: Comments
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchComments();
-  }, [slug]);
-
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const res = await fetch(`/api/comments?slug=${slug}`);
       if (res.ok) {
         const data = await res.json();
         setComments(data);
       }
-    } catch (error) {
+    } catch {
       console.error('Failed to load comments');
     } finally {
       setLoading(false);
     }
-  };
+  }, [slug]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ export default function CommentsSection({ slug, postTitle, postTopic }: Comments
         setNewComment('');
         fetchComments();
       }
-    } catch (error) {
+    } catch {
       console.error('Failed to post comment');
     } finally {
       setSubmitting(false);

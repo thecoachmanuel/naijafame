@@ -30,7 +30,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   const ads = await prisma.ad.findMany({
     orderBy: { createdAt: 'desc' },
   });

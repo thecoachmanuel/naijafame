@@ -27,9 +27,9 @@ export default function NewsletterForm() {
       setStatus("success");
       setMessage(data.message);
       setEmail("");
-    } catch (error: any) {
+    } catch (error) {
       setStatus("error");
-      setMessage(error.message);
+      setMessage(error instanceof Error ? error.message : "An error occurred");
     }
   };
 

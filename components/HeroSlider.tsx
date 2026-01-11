@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PostListItem } from '@/lib/types';
 
@@ -16,13 +17,7 @@ const getImage = (slug: string, image?: string | null) => image || `https://pics
 
 export default function HeroSlider({ posts }: HeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [sliderPosts, setSliderPosts] = useState<SliderPost[]>([]);
-
-  useEffect(() => {
-    // Shuffle and pick top 5 for the slider on mount
-    const shuffled = [...posts].sort(() => 0.5 - Math.random());
-    setSliderPosts(shuffled.slice(0, 5));
-  }, [posts]);
+  const sliderPosts = posts.slice(0, 5);
 
   useEffect(() => {
     if (sliderPosts.length === 0) return;
@@ -31,7 +26,7 @@ export default function HeroSlider({ posts }: HeroSliderProps) {
     }, 5000); // Change every 5 seconds
 
     return () => clearInterval(timer);
-  }, [sliderPosts]);
+  }, [sliderPosts.length]);
 
   if (sliderPosts.length === 0) {
     return <div className="w-full h-[400px] bg-gray-200 animate-pulse rounded-sm"></div>;
@@ -47,10 +42,12 @@ export default function HeroSlider({ posts }: HeroSliderProps) {
           }`}
         >
           <Link href={`/${post.topic}/${post.slug}`} className="block w-full h-full relative">
-            <img
+            <Image
               src={getImage(post.slug, post.image)}
               alt={post.title}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
+              priority={index === 0}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
             <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 pt-20">

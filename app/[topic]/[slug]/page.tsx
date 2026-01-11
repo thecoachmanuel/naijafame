@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPostContent, getPostsByTopic, getAllTopics, getAllPosts } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
@@ -32,6 +33,7 @@ export default async function PostPage({ params }: { params: Promise<{ topic: st
   const { topic, slug } = await params;
   
   // Try DB first
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let post: any = await prisma.post.findUnique({
     where: { slug },
   });
@@ -82,8 +84,8 @@ export default async function PostPage({ params }: { params: Promise<{ topic: st
              </div>
 
              {/* Featured Image */}
-             <div className="aspect-video w-full overflow-hidden rounded-sm mb-8 bg-gray-200">
-                <img src={getImage(slug, post.image)} alt={post.title} className="object-cover w-full h-full" />
+             <div className="aspect-video w-full overflow-hidden rounded-sm mb-8 bg-gray-200 relative">
+                <Image src={getImage(slug, post.image)} alt={post.title} fill className="object-cover" />
              </div>
 
              <AdDisplay position="content_top" />
@@ -112,8 +114,8 @@ export default async function PostPage({ params }: { params: Promise<{ topic: st
                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       {relatedPosts.map(p => (
                          <Link key={p.slug} href={`/${topic}/${p.slug}`} className="group block">
-                            <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200">
-                               <img src={getImage(p.slug)} alt={p.title} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                            <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200 relative">
+                               <Image src={getImage(p.slug)} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                             </div>
                             <h4 className="font-bold text-sm leading-tight group-hover:text-bn-red transition-colors text-bn-black line-clamp-3">{p.title}</h4>
                          </Link>
@@ -143,8 +145,8 @@ export default async function PostPage({ params }: { params: Promise<{ topic: st
                       {recentPosts.map((p, i) => (
                          <Link key={p.slug} href={`/${p.topic}/${p.slug}`} className="flex gap-4 group">
                             <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded-sm bg-gray-200 relative">
-                               <img src={getImage(p.slug)} alt={p.title} className="object-cover w-full h-full" />
-                               <span className="absolute top-0 left-0 bg-bn-red text-white text-[10px] font-bold w-6 h-6 flex items-center justify-center">{i + 1}</span>
+                               <Image src={getImage(p.slug)} alt={p.title} fill className="object-cover" />
+                               <span className="absolute top-0 left-0 bg-bn-red text-white text-[10px] font-bold w-6 h-6 flex items-center justify-center z-10">{i + 1}</span>
                             </div>
                             <div>
                                <span className="text-bn-red text-[10px] font-bold uppercase">{p.topic}</span>

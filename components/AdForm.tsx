@@ -57,8 +57,8 @@ export default function AdForm({ initialData, isEditing = false }: AdFormProps) 
 
       router.push("/admin/ads");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }

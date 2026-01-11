@@ -91,7 +91,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json(post?.comments || []);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Failed to fetch comments" }, { status: 500 });
   }
 }

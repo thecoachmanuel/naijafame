@@ -30,7 +30,7 @@ export default function ContactForm() {
 
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
+    } catch {
       setStatus("error");
       setErrorMessage("Something went wrong. Please try again.");
     }
@@ -39,7 +39,7 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-        Message sent successfully! We'll get back to you soon.
+        Message sent successfully! We&apos;ll get back to you soon.
         <button 
           onClick={() => setStatus("idle")}
           className="block mt-4 text-sm font-bold underline"

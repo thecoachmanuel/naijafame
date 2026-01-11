@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllPosts, getAllTopics, getPostPreview } from '@/lib/posts';
 import { prisma } from "@/lib/prisma";
 import HeroSlider from '@/components/HeroSlider';
@@ -74,7 +75,7 @@ export default async function Home() {
   const scoopPosts = allPosts.filter(p => scoopTopics.includes(p.topic)).slice(0, 12);
 
   // Sub-feature for Hero (Right side)
-  const heroMain = heroPosts.slice(0, 6); // For slider
+  const heroMain = shuffle(heroPosts.slice(0, 6)); // For slider
   const heroSide = heroPosts.slice(6, 10); // For side list
 
   return (
@@ -91,8 +92,8 @@ export default async function Home() {
             {/* Side Features */}
             {heroSide.map(post => (
                 <Link key={post.slug} href={`/${post.topic}/${post.slug}`} className="flex gap-4 group items-start h-full">
-                   <div className="w-32 h-24 flex-shrink-0 overflow-hidden rounded-sm bg-gray-200">
-                      <img src={getImage(post.slug, post.image)} alt={post.title} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                   <div className="w-32 h-24 flex-shrink-0 overflow-hidden rounded-sm bg-gray-200 relative">
+                      <Image src={getImage(post.slug, post.image)} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                    </div>
                    <div className="flex flex-col justify-between h-full py-1">
                       <div>
@@ -118,8 +119,8 @@ export default async function Home() {
            {scoopPosts.map(post => (
              <div key={post.slug} className="group flex flex-col h-full">
                 <Link href={`/${post.topic}/${post.slug}`} className="flex-grow">
-                  <div className="aspect-[4/3] overflow-hidden mb-3 rounded-sm bg-gray-200">
-                    <img src={getImage(post.slug, post.image)} alt={post.title} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                  <div className="aspect-[4/3] overflow-hidden mb-3 rounded-sm bg-gray-200 relative">
+                    <Image src={getImage(post.slug, post.image)} alt={post.title} fill className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-bn-red text-[10px] font-bold uppercase tracking-wide mb-1">{post.topic}</span>
@@ -148,8 +149,8 @@ export default async function Home() {
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 {topicPosts.map(post => (
                   <Link key={post.slug} href={`/${post.topic}/${post.slug}`} className="group block">
-                     <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200">
-                       <img src={getImage(post.slug, post.image)} alt={post.title} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                     <div className="aspect-video overflow-hidden mb-3 rounded-sm bg-gray-200 relative">
+                       <Image src={getImage(post.slug, post.image)} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                      </div>
                      <h3 className="font-bold text-base leading-snug group-hover:text-bn-gold transition-colors text-bn-black">{post.title}</h3>
                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.excerpt}</p>
