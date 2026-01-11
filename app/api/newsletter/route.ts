@@ -2,6 +2,12 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  // Skip DB if using placeholder connection string (local dev without Postgres)
+  const isPlaceholderDb = process.env.DATABASE_URL?.includes('johndoe') || false;
+  if (isPlaceholderDb) {
+    return NextResponse.json({ message: "Subscribed successfully (Mock)" }, { status: 201 });
+  }
+
   try {
     const { email } = await req.json();
 

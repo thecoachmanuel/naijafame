@@ -7,6 +7,12 @@ export async function POST(
 ) {
   const { slug } = await params;
   
+  // Skip DB if using placeholder connection string
+  const isPlaceholderDb = process.env.DATABASE_URL?.includes('johndoe') || false;
+  if (isPlaceholderDb) {
+    return NextResponse.json({ viewCount: 0 });
+  }
+
   try {
     // Ensure system user exists
     let systemUser = await prisma.user.findUnique({ where: { email: 'system@naijafame.com' } });
@@ -49,6 +55,13 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  
+  // Skip DB if using placeholder connection string
+  const isPlaceholderDb = process.env.DATABASE_URL?.includes('johndoe') || false;
+  if (isPlaceholderDb) {
+    return NextResponse.json({ viewCount: 0 });
+  }
+
   try {
     const post = await prisma.post.findUnique({
       where: { slug },
